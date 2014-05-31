@@ -1,0 +1,19 @@
+<template name="faq">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            {{> listMenu}}
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            {{> faqContent}}
+        </div>
+    </div>
+</template>
+
+<template name="faqContent">
+    <h1 class="page-header">FAQ</h1>
+
+    <p>Q: My flag does not show properly</p>
+    <p>A: In your config.lua, you need to set "location" to one of valid country names.
+        Full list of country names is available at https://commons.wikimedia.org/wiki/Category:SVG_sovereign_state_flags
+        If the flag there is called "Flag of the Democratic Republic of the Congo.svg" then you need to put "Democratic Republic of the Congo" in config.lua to use it.</p>
+</template>

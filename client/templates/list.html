@@ -1,0 +1,61 @@
+<template name="listMenu">
+    <ul class="nav nav-sidebar">
+        <li class={{isCurrentTag 'all'}}><a href="{{pathFor 'list'}}">All servers <span class="badge">{{servers_count}}</span></a></li>
+    </ul>
+    <ul class="nav nav-sidebar">
+        <li class={{isCurrentTag 'ddos'}}><a href="{{absoluteUrl 'tags/ddos'}}">DDoS-protected  <span class="badge">{{servers_ddos_count}}</span></a></li>
+        <li class={{isCurrentTag 'spigu'}}><a href="{{absoluteUrl 'tags/spigu'}}">Spigu Hosting <span class="badge">{{servers_spigu_count}}</span></a></li>
+    </ul>
+    <ul class="nav nav-sidebar">
+        <li class={{isCurrentTag 'offline'}}><a href="{{absoluteUrl 'tags/offline'}}">Offline servers  <span class="badge">{{servers_offline_count}}</span></a></li>
+    </ul>
+</template>
+
+<template name="list">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            {{> listMenu}}
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            {{!-- <h1 class="page-header">Server List</h1> --}}
+            <div class="alert alert-info">We automatically refresh status from OT servers every 5 minutes and update it for you, no need to refresh this site.</div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Host/Website</th>
+                        <th>Players (Record) / Max</th>
+                        <th>Uptime</th>
+                        <th>Client version</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each servers}}
+                    <tr>
+                        <td><a class="flag-webicon {{toFlag status.serverinfo.location}} xsmall">{{status.serverinfo.location}}</a></td>
+                        <td><a href="{{pathFor 'details'}}">{{status.serverinfo.servername}}</a></td>
+                        <td><a href="{{status.serverinfo.url}}" target="_blank">{{host}}</a></td>
+                        <td>{{status.players.online}} ({{status.players.peak}}) / {{status.players.max}}</td>
+                        <td>{{numeral status.uptime '0.00'}}% {{#unless status.online}}<span class="label label-danger">OFFLINE</span>{{/unless}}</td>
+                        <td>{{status.serverinfo.client}}</td>
+                        <td>
+                            <button type="button" data-action="refresh" data-id="{{_id}}" class="btn btn-success">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </button>
+                            <button type="button" data-action="remove" data-id="{{_id}}" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    {{else}}
+                        <p class="text-center">No servers to list.</p>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</template>

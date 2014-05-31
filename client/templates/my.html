@@ -1,0 +1,86 @@
+<template name="my">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            {{> listMenu}}
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Servers you play</h1>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Host/Website</th>
+                        <th>Players (Record) / Max</th>
+                        <th>Uptime</th>
+                        <th>Client version</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each servers}}
+                    <tr>
+                        <td><a class="flag-webicon {{toFlag status.serverinfo.location}} xsmall">{{status.serverinfo.location}}</a></td>
+                        <td><a href="{{pathFor 'details'}}">{{status.serverinfo.servername}}</a></td>
+                        <td><a href="{{status.serverinfo.url}}" target="_blank">{{host}}</a></td>
+                        <td>{{status.players.online}} ({{status.players.peak}}) / {{status.players.max}}</td>
+                        <td>{{numeral status.uptime '0.00'}}%</td>
+                        <td>{{status.serverinfo.client}}</td>
+                        <td>
+                            <button type="button" data-action="refresh" data-id="{{_id}}" class="btn btn-success">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </button>
+                            <button type="button" data-action="remove" data-id="{{_id}}" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    {{else}}
+                        <p class="text-center">No servers to list.</p>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+            <h1 class="page-header">Servers you host</h1>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Host/Website</th>
+                        <th>Players (Record) / Max</th>
+                        <th>Uptime</th>
+                        <th>Client version</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each servers}}
+                    <tr>
+                        <td><a class="flag-webicon {{toFlag status.serverinfo.location}} xsmall">{{status.serverinfo.location}}</a></td>
+                        <td><a href="{{pathFor 'details'}}">{{status.serverinfo.servername}}</a></td>
+                        <td><a href="{{status.serverinfo.url}}" target="_blank">{{host}}</a></td>
+                        <td>{{status.players.online}} ({{status.players.peak}}) / {{status.players.max}}</td>
+                        <td>{{numeral status.uptime '0.00'}}%</td>
+                        <td>{{status.serverinfo.client}}</td>
+                        <td>
+                            <button type="button" data-action="refresh" data-id="{{_id}}" class="btn btn-success">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </button>
+                            <button type="button" data-action="remove" data-id="{{_id}}" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    {{else}}
+                        <p class="text-center">No servers to list.</p>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,15 @@
+{
+  "packages": {
+    "iron-router": {},
+    "moment": {},
+    "npm": {},
+    "roles": {},
+    "connection-banner": {},
+    "user-status": {},
+    "bootstrap-3": {},
+    "iron-router-progress": {},
+    "xml2js": {},
+    "flag-webicons": {},
+    "numeral": {}
+  }
+}
