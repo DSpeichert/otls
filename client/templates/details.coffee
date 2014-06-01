@@ -43,3 +43,23 @@ Template.details.rendered = ->
     menubar: false
     scrollbars: false
     toolbar: false
+
+    Template.details.pingGague = Gauge document.getElementById('ping-gauge'),
+      clazz: 'small'
+      size :  100
+      min  :  0
+      max  :  200
+      transitionDuration : 500
+
+      label                      :  'Ping'
+      minorTicks                 :  4
+      majorTicks                 :  5
+      needleWidthRatio           :  0.6
+      needleContainerRadiusRatio :  0.7
+
+      zones: [
+        { clazz: 'yellow-zone', from: 0.50, to: 0.75 }
+        { clazz: 'red-zone', from: 0.75, to: 1.0 }
+      ]
+
+    Template.details.pingGague.write Router.current().data().status.ping

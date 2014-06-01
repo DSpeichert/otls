@@ -26,6 +26,19 @@ Template.listMenu.isCurrentTag = (tag) ->
   else
     false
 
+Template.list.playersOnlineServers = Template.listMenu.servers_count
+
+Template.list.playersOnline = ->
+  _.reduce Servers.find({
+      'status.online': true
+    }).fetch(), (memo, server) ->
+      console.log memo
+      try
+        memo + server.status.players.online
+      catch e
+        return memo
+    , 0
+
 Session.setDefault 'search-term', ''
 
 Template.list.servers = ->

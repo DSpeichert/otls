@@ -25,6 +25,7 @@
             <div class="row">
                 <div class="col-md-9">
                     <h1 class="page-header">{{status.serverinfo.servername}}
+                        {{#unless status.online}}<small>Showing last known information</small>{{/unless}}
                         {{#if status.ddos_protected}}<span class="label label-primary glyphicon glyphicon-flash"> DDoS-protected</span>{{/if}}
                         {{#if status.spigu_hosting}}<a href="http://otland.net/threads/ddg-ots-hosting-service.141037/"><span class="label label-primary glyphicon glyphicon-tower"> Spigu Hosting</span></a>{{/if}}
                     </h1>
@@ -77,6 +78,7 @@
                         <div class="panel-body text-center">
                             <strong>{{status.players.online}}</strong> players online<br/>
                             Record is <strong>{{status.players.peak}}</strong>
+                            {{#unless status.online}}<h2><span class="label label-danger">Server is OFFLINE</span></h2>{{/unless}}
                         </div>
                     </div>
                 </div>
@@ -87,8 +89,9 @@
                             {{status.serverinfo.server}} {{status.serverinfo.version}}<br/>
                             currently runnning for {{moment_duration status.serverinfo.uptime}}<br/>
                             around for {{moment_fromNow createdAt true}}<br/>
-                            ping time is {{status.ping}} ms<br/>
-                            hosted by {{status.ip_whois.isp}} in {{#if status.ip_whois.city}}{{status.ip_whois.city}}, {{/if}}<a class="flag-webicon {{toFlag status.ip_whois.country}} xsmall">{{status.ip_whois.country}}</a> {{status.ip_whois.country}}
+                            <span id="ping-gauge" class="gauge-container"></span><br/>
+                            hosted by {{status.ip_whois.isp}} in {{#if status.ip_whois.city}}{{status.ip_whois.city}}, {{/if}}<a class="flag-webicon {{toFlag status.ip_whois.country}} xsmall">{{status.ip_whois.country}}</a> {{status.ip_whois.country}}<br/>
+                            with uptime of {{numeral status.uptime '0.00'}}%
                         </div>
                     </div>
                 </div>
@@ -100,7 +103,7 @@
                         <div class="panel-heading">Brought to you by</div>
                         <div class="panel-body text-center">
                             <h3>{{#if status.owner.name}}{{status.owner.name}}{{else}}<i>(unknown)</i>{{/if}}</h3>
-                            <a class="flag-webicon {{toFlag status.serverinfo.location}} large">{{status.serverinfo.location}}</a>
+                            <a class="flag-webicon {{toFlag status.serverinfo.location}} large" title="{{status.serverinfo.location}}">{{status.serverinfo.location}}</a>
                         </div>
                     </div>
                 </div>

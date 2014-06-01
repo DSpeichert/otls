@@ -131,5 +131,9 @@ Servers.refresh = (id) ->
       statusAt: new Date()
     $inc:
       statusCount: 1
+    $push:
+      statusHistory:
+        timestamp: server.statusAt
+        status: server.status
 
   status

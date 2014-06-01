@@ -4,6 +4,9 @@ Router.configure
   loadingTemplate:  'loading'
 #Router.onBeforeAction 'dataNotFound'
 
+Router.onAfterAction ->
+  GAnalytics.pageview()
+
 IronRouterProgress.configure
   delay: false
 

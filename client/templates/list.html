@@ -18,7 +18,8 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             {{!-- <h1 class="page-header">Server List</h1> --}}
-            <div class="alert alert-info">We automatically refresh status from OT servers every 5 minutes and update it for you, no need to refresh this site.</div>
+            <div class="alert alert-info">We automatically refresh status from OT servers every 5 minutes and update it for you, no need to refresh this site.<br/>
+            There are <b>{{playersOnline}}</b> players online on <b>{{playersOnlineServers}}</b> online servers.</div>
 
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -35,7 +36,7 @@
                     <tbody>
                     {{#each servers}}
                     <tr>
-                        <td><a class="flag-webicon {{toFlag status.serverinfo.location}} xsmall">{{status.serverinfo.location}}</a></td>
+                        <td><a class="flag-webicon {{toFlag status.serverinfo.location}} small" title="{{status.serverinfo.location}}">{{status.serverinfo.location}}</a></td>
                         <td><a href="{{pathFor 'details'}}">{{status.serverinfo.servername}}</a></td>
                         <td><a href="{{status.serverinfo.url}}" target="_blank">{{host}}</a></td>
                         <td>{{status.players.online}} ({{status.players.peak}}) / {{status.players.max}}</td>

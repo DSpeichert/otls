@@ -1,0 +1,8 @@
+#connection-lost-banner + div.navbar-fixed-top,
+#connection-try-reconnect + div.navbar-fixed-top {
+    top: 41px;
+}
+div.navbar-fixed-top + #connection-lost-banner,
+div.navbar-fixed-top + #connection-try-reconnect {
+    top: 51px;
+}

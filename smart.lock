@@ -12,7 +12,10 @@
       "iron-router-progress": {},
       "xml2js": {},
       "flag-webicons": {},
-      "numeral": {}
+      "numeral": {},
+      "x-editable-bootstrap3-less": {},
+      "chatworks": {},
+      "GAnalytics": {}
     },
     "packages": {
       "iron-router": {
@@ -70,6 +73,21 @@
         "tag": "v1.5.3",
         "commit": "bdc97fc69bee7dadae1fc0f97fa6d9d76a03e73d"
       },
+      "x-editable-bootstrap3-less": {
+        "git": "https://github.com/chathuraa/meteor-x-editable-bootstrap-less.git",
+        "tag": "v1.5.3",
+        "commit": "eb5e6823e40747f1c1b4f20451f8d96822f8b969"
+      },
+      "chatworks": {
+        "git": "https://github.com/Pent/chatworks.git",
+        "tag": "v1.7.0",
+        "commit": "a081d78cd9834bab9a7a1d6868dc7b88effc08cc"
+      },
+      "GAnalytics": {
+        "git": "https://github.com/datariot/meteor-ganalytics.git",
+        "tag": "v0.2.0",
+        "commit": "2d5e48d5cc4c2f88edd40c0b2341d378bd4a702b"
+      },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
         "tag": "v0.2.4",
@@ -89,6 +107,11 @@
         "git": "https://github.com/ckir/modernizr-meteor.git",
         "tag": "v2.6.2",
         "commit": "391ca2a3beff3cd2b0e1099cb2d744b5a2e8a73e"
+      },
+      "bootstrap3-less": {
+        "git": "https://github.com/eprochasson/bootstrap3-less",
+        "tag": "v0.1.9",
+        "commit": "5c812c4d7ce72917a065f0424c3cf54e5ff2d16a"
       }
     }
   }

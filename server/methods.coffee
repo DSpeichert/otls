@@ -17,6 +17,7 @@ Meteor.methods
         createdAt: new Date()
         statusCount: 0
         statusFail: 0
+        satusHistory: []
 
       try
         Servers.refresh id

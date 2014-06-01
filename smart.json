@@ -10,6 +10,9 @@
     "iron-router-progress": {},
     "xml2js": {},
     "flag-webicons": {},
-    "numeral": {}
+    "numeral": {},
+    "x-editable-bootstrap3-less": {},
+    "chatworks": {},
+    "GAnalytics": {}
   }
 }
