@@ -68,7 +68,6 @@ Template.details.rendered = ->
     key: 'Players online'
     values: Router.current().data().statusHistory
 
-  console.log data
   nv.addGraph ->
     chart = nv.models.stackedAreaChart()
       .margin({right: 100})

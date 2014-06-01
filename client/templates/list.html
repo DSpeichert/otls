@@ -10,10 +10,13 @@
         <li class={{isCurrentTag 'offline'}}><a href="{{absoluteUrl 'tags/offline'}}">Offline servers  <span class="badge">{{servers_offline_count}}</span></a></li>
     </ul>
 
-    <h4>Servers by versions</h4>
     <div>
         <svg id="client-chart"></svg>
     </div>
+    <button type="button" id="refresh-client-chart" class="btn btn-sm btn-block btn-default" style="display: none;">
+        <span class="glyphicon glyphicon-refresh"> Refresh chart</span>
+    </button>
+
 </template>
 
 <template name="list">

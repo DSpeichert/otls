@@ -1,3 +1,7 @@
+Template.listMenu.events
+  'click #refresh-client-chart': ->
+    Template.listMenu.drawClientChart()
+
 Template.listMenu.servers_count = ->
   Servers.find
     'status.online': true
@@ -26,45 +30,44 @@ Template.listMenu.isCurrentTag = (tag) ->
   else
     false
 
-Template.listMenu.rendered = ->
-  Deps.autorun ->
-    clientData = _.chain Servers.find({
-        'status.online': true
-      }).fetch()
-    .countBy (el) ->
+Template.listMenu.drawClientChart = ->
+  clientData = _.chain Servers.find({
+    'status.online': true
+  }).fetch()
+  .countBy (el) ->
       try
         return el.status.serverinfo.client
       catch e
         return 'unknown'
-    .map (value, key) ->
+  .map (value, key) ->
       version: key
       count: value
-    .sortBy (value) ->
+  .sortBy (value) ->
       value.count
-    .value()
+  .value()
 
-    $('#client-chart').html()
-    nv.addGraph ->
-      width = 200
-      height = 200
-      chart = nv.models.pieChart()
-      .x (d) ->
+  $('#client-chart').html()
+  nv.addGraph ->
+    chart = nv.models.pieChart()
+    .x (d) ->
         return d.version
-      .y (d) ->
+    .y (d) ->
         return d.count
-      .showLabels(true)
-      .showLegend(false)
-      #.width(width)
-      #.height(height)
+    .showLabels(true)
+    .showLegend(false)
 
-      d3.select("#client-chart")
-      .datum(clientData)
-      .transition().duration(1200)
-      #.attr('width', width)
-      #.attr('height', height)
-      .call(chart)
+    d3.select("#client-chart")
+    .datum(clientData)
+    .transition().duration(1200)
+    .call(chart)
 
-      chart
+    chart
+
+Template.listMenu.rendered = ->
+  sub = Meteor.subscribe 'Servers', ->
+    Template.listMenu.drawClientChart()
+    sub.stop()
+    #$('#refresh-client-chart').show()
 
 Template.list.playersOnlineServers = Template.listMenu.servers_count
 
