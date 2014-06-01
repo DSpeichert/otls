@@ -15,7 +15,8 @@
       "numeral": {},
       "x-editable-bootstrap3-less": {},
       "chatworks": {},
-      "GAnalytics": {}
+      "GAnalytics": {},
+      "nvd3js": {}
     },
     "packages": {
       "iron-router": {
@@ -87,6 +88,11 @@
         "git": "https://github.com/datariot/meteor-ganalytics.git",
         "tag": "v0.2.0",
         "commit": "2d5e48d5cc4c2f88edd40c0b2341d378bd4a702b"
+      },
+      "nvd3js": {
+        "git": "https://github.com/ouuyeah/nvd3js.git",
+        "tag": "v0.1.0",
+        "commit": "89a8c66bb3b35d25900d31195ae0b318e4176ddb"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",

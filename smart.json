@@ -13,6 +13,7 @@
     "numeral": {},
     "x-editable-bootstrap3-less": {},
     "chatworks": {},
-    "GAnalytics": {}
+    "GAnalytics": {},
+    "nvd3js": {}
   }
 }

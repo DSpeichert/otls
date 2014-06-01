@@ -26,13 +26,52 @@ Template.listMenu.isCurrentTag = (tag) ->
   else
     false
 
+Template.listMenu.rendered = ->
+  Deps.autorun ->
+    clientData = _.chain Servers.find({
+        'status.online': true
+      }).fetch()
+    .countBy (el) ->
+      try
+        return el.status.serverinfo.client
+      catch e
+        return 'unknown'
+    .map (value, key) ->
+      version: key
+      count: value
+    .sortBy (value) ->
+      value.count
+    .value()
+
+    $('#client-chart').html()
+    nv.addGraph ->
+      width = 200
+      height = 200
+      chart = nv.models.pieChart()
+      .x (d) ->
+        return d.version
+      .y (d) ->
+        return d.count
+      .showLabels(true)
+      .showLegend(false)
+      #.width(width)
+      #.height(height)
+
+      d3.select("#client-chart")
+      .datum(clientData)
+      .transition().duration(1200)
+      #.attr('width', width)
+      #.attr('height', height)
+      .call(chart)
+
+      chart
+
 Template.list.playersOnlineServers = Template.listMenu.servers_count
 
 Template.list.playersOnline = ->
   _.reduce Servers.find({
       'status.online': true
     }).fetch(), (memo, server) ->
-      console.log memo
       try
         memo + server.status.players.online
       catch e

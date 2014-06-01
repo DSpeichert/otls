@@ -9,6 +9,11 @@
     <ul class="nav nav-sidebar">
         <li class={{isCurrentTag 'offline'}}><a href="{{absoluteUrl 'tags/offline'}}">Offline servers  <span class="badge">{{servers_offline_count}}</span></a></li>
     </ul>
+
+    <h4>Servers by versions</h4>
+    <div>
+        <svg id="client-chart"></svg>
+    </div>
 </template>
 
 <template name="list">

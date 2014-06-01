@@ -44,22 +44,63 @@ Template.details.rendered = ->
     scrollbars: false
     toolbar: false
 
-    Template.details.pingGague = Gauge document.getElementById('ping-gauge'),
-      clazz: 'small'
-      size :  100
-      min  :  0
-      max  :  200
-      transitionDuration : 500
+  Template.details.pingGague = Gauge document.getElementById('ping-gauge'),
+    clazz: 'small'
+    size :  100
+    min  :  0
+    max  :  200
+    transitionDuration : 500
 
-      label                      :  'Ping'
-      minorTicks                 :  4
-      majorTicks                 :  5
-      needleWidthRatio           :  0.6
-      needleContainerRadiusRatio :  0.7
+    label                      :  'Ping'
+    minorTicks                 :  4
+    majorTicks                 :  5
+    needleWidthRatio           :  0.6
+    needleContainerRadiusRatio :  0.7
 
-      zones: [
-        { clazz: 'yellow-zone', from: 0.50, to: 0.75 }
-        { clazz: 'red-zone', from: 0.75, to: 1.0 }
-      ]
+    zones: [
+      { clazz: 'yellow-zone', from: 0.50, to: 0.75 }
+      { clazz: 'red-zone', from: 0.75, to: 1.0 }
+    ]
 
-    Template.details.pingGague.write Router.current().data().status.ping
+  Template.details.pingGague.write Router.current().data().status.ping
+
+  data =
+    key: 'Players online'
+    values: Router.current().data().statusHistory
+
+  console.log data
+  nv.addGraph ->
+    chart = nv.models.stackedAreaChart()
+      .margin({right: 100})
+      .x (d) ->
+        try
+          return d.timestamp #We can modify the data accessor functions...
+        catch e
+          new Date()
+      .y (d) ->
+        try
+          return d.status.players.online #...in case your data is formatted differently.
+        catch e
+          0
+      .useInteractiveGuideline(true)    #Tooltips which show all data points. Very nice!
+      .rightAlignYAxis(false)      #Let's move the y-axis to the right side.
+      .transitionDuration(500)
+      .showControls(false)   #Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
+      .clipEdge(true)
+      .showLegend(false)
+
+    #Format x-axis labels with custom function.
+    chart.xAxis
+      .tickFormat (d) ->
+        moment(d).format('lll');
+
+    chart.yAxis
+      .tickFormat d3.format(' .0f')
+
+    d3.select('#players-chart')
+      .datum([data])
+      .transition()
+      .call(chart)
+
+    nv.utils.windowResize chart.update
+    chart
