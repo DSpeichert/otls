@@ -1,6 +1,15 @@
 Meteor.publish 'Servers', ->
   Servers.find()
 
+Meteor.publish 'StatusHistory', (scope) ->
+  check scope,
+    serverId: String
+
+  StatusHistory.find
+    serverId: scope.serverId
+    timestamp:
+      $gt: moment().subtract('days', 1).toDate()
+
 Servers.allow
   insert: (userId, doc) ->
     if Servers.findOne {host: doc.host, port: doc.port}
@@ -14,7 +23,6 @@ Servers.allow
       doc.statusCount = 0
       doc.statusFail = 0
       doc.status.uptime = 0
-      doc.satusHistory = []
     catch e
       console.log e.message
       return false

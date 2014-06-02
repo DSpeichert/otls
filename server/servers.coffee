@@ -131,9 +131,10 @@ Servers.refresh = (id) ->
       statusAt: new Date()
     $inc:
       statusCount: 1
-    $push:
-      statusHistory:
+
+  if server.status
+    StatusHistory.insert _.extend server.status,
+        serverId: server._id
         timestamp: server.statusAt
-        status: server.status
 
   status

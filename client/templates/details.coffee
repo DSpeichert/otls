@@ -78,7 +78,7 @@ Template.details.rendered = ->
           new Date()
       .y (d) ->
         try
-          return d.status.players.online #...in case your data is formatted differently.
+          return d.players.online #...in case your data is formatted differently.
         catch e
           0
       .useInteractiveGuideline(true)    #Tooltips which show all data points. Very nice!

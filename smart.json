@@ -7,13 +7,13 @@
     "connection-banner": {},
     "user-status": {},
     "bootstrap-3": {},
-    "iron-router-progress": {},
     "xml2js": {},
     "flag-webicons": {},
     "numeral": {},
     "x-editable-bootstrap3-less": {},
     "chatworks": {},
     "GAnalytics": {},
-    "nvd3js": {}
+    "nvd3js": {},
+    "iron-router-progress": {}
   }
 }

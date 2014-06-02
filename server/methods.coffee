@@ -4,6 +4,7 @@ Meteor.methods
     Servers.refresh id
 
   importFromShit: ->
+    console.log 'Importing...'
     site = HTTP.get 'http://otservlist.org'
     regexp = /\<a href="\/ots\/[0-9]+"\>([^<]+)\<\/a\>/gi
     while match = regexp.exec site.content
@@ -17,7 +18,6 @@ Meteor.methods
         createdAt: new Date()
         statusCount: 0
         statusFail: 0
-        satusHistory: []
 
       try
         Servers.refresh id

@@ -7,8 +7,8 @@ Router.configure
 Router.onAfterAction ->
   GAnalytics.pageview()
 
-IronRouterProgress.configure
-  delay: false
+#IronRouterProgress.configure
+#  delay: false
 
 Router.map ->
   @route 'chat'
@@ -38,6 +38,13 @@ Router.map ->
       # https://github.com/EventedMind/iron-router/issues/665#issuecomment-44418128
       server = Servers.findOne
         _id: @params._id
+
+      if not server? then return undefined
+
+      server.statusHistory = StatusHistory.find
+        serverId: @params._id
+      .fetch()
+
       server
     onBeforeAction: (pause)->
       Session.set 'server', @params._id
@@ -47,6 +54,8 @@ Router.map ->
     waitOn: ->
       [
         Meteor.subscribe 'Servers'
+        Meteor.subscribe 'StatusHistory',
+          serverId: @params._id
       ]
 
   @route 'faq'

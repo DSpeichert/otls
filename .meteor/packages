@@ -16,7 +16,6 @@ connection-banner
 user-status
 bootstrap-3
 coffeescript
-iron-router-progress
 xml2js
 flag-webicons
 http
@@ -28,3 +27,4 @@ d3
 GAnalytics
 underscore
 nvd3js
+iron-router-progress

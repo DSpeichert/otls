@@ -9,14 +9,14 @@
       "connection-banner": {},
       "user-status": {},
       "bootstrap-3": {},
-      "iron-router-progress": {},
       "xml2js": {},
       "flag-webicons": {},
       "numeral": {},
       "x-editable-bootstrap3-less": {},
       "chatworks": {},
       "GAnalytics": {},
-      "nvd3js": {}
+      "nvd3js": {},
+      "iron-router-progress": {}
     },
     "packages": {
       "iron-router": {
@@ -54,11 +54,6 @@
         "tag": "v3.1.1-1",
         "commit": "63dd38968828bb8963636df93e9a1c45e2dfe67e"
       },
-      "iron-router-progress": {
-        "git": "https://github.com/Multiply/iron-router-progress.git",
-        "tag": "v0.4.0",
-        "commit": "02f78bdaca4c13d59f548d5a0ce83408c34b56d1"
-      },
       "xml2js": {
         "git": "https://github.com/peerlibrary/meteor-xml2js.git",
         "tag": "v0.4.1-1",
@@ -93,6 +88,11 @@
         "git": "https://github.com/ouuyeah/nvd3js.git",
         "tag": "v0.1.0",
         "commit": "89a8c66bb3b35d25900d31195ae0b318e4176ddb"
+      },
+      "iron-router-progress": {
+        "git": "https://github.com/Multiply/iron-router-progress.git",
+        "tag": "v0.4.0",
+        "commit": "02f78bdaca4c13d59f548d5a0ce83408c34b56d1"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
