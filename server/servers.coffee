@@ -3,7 +3,7 @@ Servers.getStatus = (host, port=7171, callback) ->
   client = net.connect
     host: host
     port: port, ->
-      console.log 'client connected to ' + client.remoteAddress + ':' + client.remotePort
+      console.log 'we connected to ' + client.remoteAddress + ':' + client.remotePort
       client.time = new Date()
       # this does not work: String.fromCharCode(6) + String.fromCharCode(0) + String.fromCharCode(255) + String.fromCharCode(255) + 'info'
       # We need to use buffer here because nodejs converts null (0x00) to space (0x20) in ASCII
@@ -11,7 +11,7 @@ Servers.getStatus = (host, port=7171, callback) ->
         #console.log 'data sent'
 
   client.setTimeout 5000, ->
-    console.log 'timed out after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
+    console.log 'remote timed out after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
     client.end()
     client.destroy()
     callback? 'timeout', null
@@ -23,26 +23,33 @@ Servers.getStatus = (host, port=7171, callback) ->
     ip = client.remoteAddress
     client.end()
     client.destroy()
-    console.log 'client disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
+    console.log 'we disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
     callback? null, [data, ip, new Date().getMilliseconds() - client.time.getMilliseconds()]
 
   client.on 'end', ->
-    #console.log 'client disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
-    callback? null, null
+    console.log 'remote disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
+    # even though we return false here, the caller gets "undefined"
+    # if we pass null as return value, exception is thrown
+    callback? null, false
 
   client.on 'error', ->
     console.log 'socket error'
-    callback? 'error', null
+    callback? 'socket error', null
 
 Servers.getStatusSync = Async.wrap Servers.getStatus
 
-Servers.getParsedStatus = (host, port) ->
+Servers.getParsedStatus = (host, port=7171) ->
   try
     [raw_status, remoteAddress, ping] = @getStatusSync host, port
   catch e
-    throw new Meteor.Error 504, 'Server is offline'
+    try
+      console.log 'retrying ', host, port
+      [raw_status, remoteAddress, ping] = @getStatusSync host, port
+    catch e
+      throw new Meteor.Error 504, 'Server is offline'
 
-  if raw_status is null
+  #console.log 'raw_status is ', raw_status
+  if not raw_status?
     throw new Meteor.Error 420, 'Server throttled connection'
 
   status = xml2js.parseStringSync raw_status
@@ -108,6 +115,7 @@ Servers.refresh = (id) ->
   try
     status = @getParsedStatus server.host, server.port
   catch e
+    #console.log e.error, e.code, e.message, e.details
     if e.error == 420
       throw new Meteor.Error 420, 'Server did not return any data'
 

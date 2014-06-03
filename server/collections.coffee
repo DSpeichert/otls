@@ -20,12 +20,11 @@ Servers.allow
       doc.userId = userId
       doc.status = Servers.getParsedStatus doc.host, doc.port
       doc.statusAt = new Date()
-      doc.statusCount = 0
+      doc.statusCount = 1
       doc.statusFail = 0
-      doc.status.uptime = 0
+      doc.status.uptime = 100
     catch e
-      console.log e.message
-      return false
+      throw new Meteor.Error 400, 'Cannot get server status.'
 
     true
 

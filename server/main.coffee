@@ -7,7 +7,7 @@ Meteor.startup ->
       try
         Servers.refresh server._id
       catch e
-        console.log e.message
+        console.log server._id, e.message
   , 300000
 
 BrowserPolicy.content.allowScriptOrigin 'www.google-analytics.com'

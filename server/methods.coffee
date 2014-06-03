@@ -9,20 +9,20 @@ Meteor.methods
     regexp = /\<a href="\/ots\/[0-9]+"\>([^<]+)\<\/a\>/gi
     while match = regexp.exec site.content
       if Servers.findOne {host: match[1], port: 7171}
-        console.log 'skipping ' + match[1]
+        console.log 'Import: skipping ' + match[1]
         continue
 
-      id = Servers.insert
-        host: match[1]
-        port: 7171
-        createdAt: new Date()
-        statusCount: 0
-        statusFail: 0
-
       try
-        Servers.refresh id
-        console.log 'added ' + match[1] + ' as ' + id
+        id = Servers.insert
+          host: match[1]
+          port: 7171
+          createdAt: new Date()
+          status: _.extend Servers.getParsedStatus(match[1]),
+            uptime: 100
+          statusAt: new Date()
+          statusCount: 0
+          statusFail: 0
+
+        console.log 'Import: added ' + match[1] + ' as ' + id
       catch e
         console.log e.message, e.details
-        Servers.remove
-          _id: id
