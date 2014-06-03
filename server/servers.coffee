@@ -1,10 +1,11 @@
 net = Npm.require 'net'
 Servers.getStatus = (host, port=7171, callback) ->
+  time = null
   client = net.connect
     host: host
     port: port, ->
       console.log 'we connected to ' + client.remoteAddress + ':' + client.remotePort
-      client.time = new Date()
+      time = new Date()
       # this does not work: String.fromCharCode(6) + String.fromCharCode(0) + String.fromCharCode(255) + String.fromCharCode(255) + 'info'
       # We need to use buffer here because nodejs converts null (0x00) to space (0x20) in ASCII
       client.write new Buffer('0600ffff696e666f', 'hex'), ->
@@ -24,7 +25,7 @@ Servers.getStatus = (host, port=7171, callback) ->
     client.end()
     client.destroy()
     console.log 'we disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
-    callback? null, [data, ip, new Date().getMilliseconds() - client.time.getMilliseconds()]
+    callback? null, [data, ip, new Date().getMilliseconds() - time.getMilliseconds()]
 
   client.on 'end', ->
     console.log 'remote disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
@@ -43,7 +44,7 @@ Servers.getParsedStatus = (host, port=7171) ->
     [raw_status, remoteAddress, ping] = @getStatusSync host, port
   catch e
     try
-      console.log 'retrying ', host, port
+      console.log 'retrying', host, port
       [raw_status, remoteAddress, ping] = @getStatusSync host, port
     catch e
       throw new Meteor.Error 504, 'Server is offline'

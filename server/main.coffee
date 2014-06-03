@@ -12,3 +12,9 @@ Meteor.startup ->
 
 BrowserPolicy.content.allowScriptOrigin 'www.google-analytics.com'
 BrowserPolicy.content.allowImageOrigin 'www.google-analytics.com'
+
+Meteor.AppCache.config
+  onlineOnly: [
+    '/flags/'
+    '/packages/flag-webicons/'
+  ]

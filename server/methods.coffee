@@ -13,12 +13,15 @@ Meteor.methods
         continue
 
       try
+        status = Servers.getParsedStatus(match[1])
+        if status is false
+          throw new Meteor.Error 420, 'Server did not return any data'
+        status.uptime = 100
         id = Servers.insert
           host: match[1]
           port: 7171
           createdAt: new Date()
-          status: _.extend Servers.getParsedStatus(match[1]),
-            uptime: 100
+          status: status
           statusAt: new Date()
           statusCount: 0
           statusFail: 0
