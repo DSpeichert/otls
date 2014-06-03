@@ -28,3 +28,10 @@ UI.registerHelper 'not_equal2', (a1, a2) ->
 UI.registerHelper 'numeral', (number, format) ->
   return if typeof number is 'undefined' or typeof format is 'undefined' or isNaN number
   numeral(number).format format
+
+UI.registerHelper 'shorten', (str, chars) ->
+  return if typeof str isnt 'string' or typeof chars isnt 'number'
+  if (str.length > chars)
+    str.substring(0, chars) + '...'
+  else
+    str
