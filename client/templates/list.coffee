@@ -69,6 +69,32 @@ Template.listMenu.rendered = ->
     sub.stop()
     #$('#refresh-client-chart').show()
 
+  query =
+    'status.serverinfo.servername':
+      $regex: Session.get 'search-term'
+      $options: 'i'
+    'status.online': Router.current().params.tag != 'offline'
+
+  query['status.spigu_hosting'] = true if Router.current().params.tag == 'spigu'
+  query['status.ddos_protected'] = true if Router.current().params.tag == 'ddos'
+
+  Servers
+    .find query
+    .observeChanges({
+      changed: (id) ->
+        # Fetch previous color
+        prev_color = jQuery.Color $("#" + id).children(), 'backgroundColor'
+
+        # Blink changed server
+        $("#" + id).children()
+        .animate
+          backgroundColor: jQuery.Color 'rgb(255, 235, 100)'
+        , 150 #ms
+        .animate
+          backgroundColor: prev_color
+        , 850 #ms
+    })
+
 Template.list.playersOnlineServers = Template.listMenu.servers_count
 
 Template.list.playersOnline = ->

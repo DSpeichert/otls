@@ -45,7 +45,7 @@
                     </thead>
                     <tbody>
                     {{#each servers}}
-                    <tr>
+                    <tr id="{{this._id}}">
                         <td><a class="flag-webicon {{toFlag status.serverinfo.location}} small" title="{{status.serverinfo.location}}">{{status.serverinfo.location}}</a></td>
                         <td><a href="{{pathFor 'details'}}">{{status.serverinfo.servername}}</a></td>
                         <td><a href="{{status.serverinfo.url}}" target="_blank">{{host}}</a></td>
