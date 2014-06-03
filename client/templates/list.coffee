@@ -115,8 +115,12 @@ Template.list.events
           title: 'Oh No!'
           text: error.message
           type: 'error'
+          delay: 2000
+          animation: 'fade'
       else
         new PNotify
           title: 'All fine!'
           text: 'Refresh successful.'
           type: 'success'
+          delay: 2000
+          animation: 'fade'
