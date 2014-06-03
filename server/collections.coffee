@@ -9,6 +9,11 @@ Meteor.publish 'StatusHistory', (scope) ->
     serverId: scope.serverId
     timestamp:
       $gt: moment().subtract('days', 1).toDate()
+  ,
+    fields:
+      serverId: 1
+      timestamp: 1
+      'players.online': 1
 
 Servers.allow
   insert: (userId, doc) ->
