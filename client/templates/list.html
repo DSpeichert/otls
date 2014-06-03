@@ -38,6 +38,7 @@
                         <th>Host/Website</th>
                         <th>Players (Record) / Max</th>
                         <th>Uptime</th>
+                        <th>Rates</th>
                         <th>Client version</th>
                         <th><img class="pull-right" src="img/loader.gif" alt="Refreshing..." width="16" height="16" /></th>
                     </tr>
@@ -50,6 +51,7 @@
                         <td><a href="{{status.serverinfo.url}}" target="_blank">{{host}}</a></td>
                         <td>{{status.players.online}} ({{status.players.peak}}) / {{status.players.max}}</td>
                         <td>{{numeral status.uptime '0.00'}}% {{#unless status.online}}<span class="label label-danger">OFFLINE</span>{{/unless}}</td>
+                        <td>{{#if status.rates}}Exp: {{status.rates.experience}}x<br/>Magic: {{status.rates.magic}}{{/if}}</td>
                         <td>{{status.serverinfo.client}}</td>
                         <td>
                             <button type="button" data-action="refresh" data-id="{{_id}}" class="btn btn-success">

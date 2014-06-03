@@ -93,6 +93,16 @@ Servers.getParsedStatus = (host, port=7171) ->
     # monsters & npcs are optional
     normalized_status.monsters = {total: status.tsqp.monsters[0].$.total} if status.tsqp.monters?
     normalized_status.npcs = {total: status.tsqp.npcs[0].$.total} if status.tsqp.npcs?
+
+    # some servers report rates
+    if status.tsqp.rates
+      normalized_status.rates =
+        experience: status.tsqp.rates[0].$.experience
+        magic: status.tsqp.rates[0].$.magic
+        skill: status.tsqp.rates[0].$.skill
+        loot: status.tsqp.rates[0].$.loot
+        spawn: status.tsqp.rates[0].$.spawn
+
   catch e
     throw new Meteor.Error 406, 'Malformed status ' + e.message, JSON.stringify status
 

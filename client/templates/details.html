@@ -113,8 +113,17 @@
                 </div>
                 <div class="col-md-3">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Map</div>
+                        <div class="panel-heading">Game & Map</div>
                         <div class="panel-body text-center">
+                            {{#if status.rates}}
+                                <table class="table text-left">
+                                    <tr><td>Experience rate</td><td>{{status.rates.experience}}x</td></tr>
+                                    <tr><td>Magic rate</td><td>{{status.rates.magic}}x</td></tr>
+                                    <tr><td>Skill rate</td><td>{{status.rates.skill}}x</td></tr>
+                                    <tr><td>Loot rate</td><td>{{status.rates.loot}}x</td></tr>
+                                    <tr><td>Spawn rate</td><td>{{status.rates.spawn}}x</td></tr>
+                                </table>
+                            {{/if}}
                             {{#if status.map.name}}<strong>{{status.map.name}}</strong> {{/if}}{{#if status.map.author}}by {{status.map.author}}{{/if}}<br/>
                             {{#if status.map.width}}Size is {{status.map.width}} x {{status.map.height}}<br/>{{/if}}
                             {{#if status.monsters.total}}{{status.monsters.total}} monsters<br/>{{/if}}
