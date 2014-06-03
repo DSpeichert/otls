@@ -14,6 +14,7 @@ BrowserPolicy.content.allowScriptOrigin 'www.google-analytics.com'
 BrowserPolicy.content.allowImageOrigin 'www.google-analytics.com'
 
 Meteor.AppCache.config
+  chrome: process.env.NODE_ENV != 'development'
   onlineOnly: [
     '/flags/'
     '/packages/flag-webicons/'
