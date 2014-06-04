@@ -1,6 +1,7 @@
 <template name="listMenu">
     <ul class="nav nav-sidebar">
         <li class={{isCurrentTag 'all'}}><a href="{{pathFor 'list'}}">All servers <span class="badge">{{servers_count}}</span></a></li>
+        <li class={{isCurrentTag 'v10+'}}><a href="{{absoluteUrl 'tags/v10+'}}">Protocol 10+ <span class="badge">{{servers_v10p_count}}</span></a></li>
     </ul>
     <ul class="nav nav-sidebar">
         <li class={{isCurrentTag 'ddos'}}><a href="{{absoluteUrl 'tags/ddos'}}">DDoS-protected  <span class="badge">{{servers_ddos_count}}</span></a></li>
@@ -26,8 +27,10 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             {{!-- <h1 class="page-header">Server List</h1> --}}
-            <div class="alert alert-info">We automatically refresh status from OT servers every 5 minutes and update it for you, no need to refresh this site.<br/>
-            There are <b>{{playersOnline}}</b> players online on <b>{{playersOnlineServers}}</b> online servers.</div>
+            <div class="alert alert-info">
+                <span class="glyphicon glyphicon-signal"></span> We automatically refresh status from OT servers every 5 minutes and update it for you, no need to refresh this site.<br/>
+                <span class="glyphicon glyphicon glyphicon-eye-open"></span> There are <b>{{playersOnline}}</b> players online on <b>{{playersOnlineServers}}</b> online servers.
+            </div>
 
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -40,7 +43,7 @@
                         <th>Uptime</th>
                         <th>Rates</th>
                         <th>Client version</th>
-                        <th><img class="pull-right" src="img/loader.gif" alt="Refreshing..." width="16" height="16" /></th>
+                        <th><img class="pull-right" src="{{absoluteUrl 'img/loader.gif'}}" alt="Refreshing..." width="16" height="16" /></th>
                     </tr>
                     </thead>
                     <tbody>

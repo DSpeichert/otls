@@ -7,6 +7,14 @@ Template.listMenu.servers_count = ->
     'status.online': true
   .count()
 
+Template.listMenu.servers_v10p_count = ->
+  Servers.find
+    'status.online': true
+    'status.serverinfo.client':
+      $regex: '^1([0-9])\.'
+      $options: 'i'
+  .count()
+
 Template.listMenu.servers_ddos_count = ->
   Servers.find
     'status.online': true
@@ -75,6 +83,10 @@ Template.listMenu.rendered = ->
       $options: 'i'
     'status.online': Router.current().params.tag != 'offline'
 
+  if Router.current().params.tag == 'v10+'
+    query['status.serverinfo.client'] =
+      $regex: '^1([0-9])\.'
+      $options: 'i'
   query['status.spigu_hosting'] = true if Router.current().params.tag == 'spigu'
   query['status.ddos_protected'] = true if Router.current().params.tag == 'ddos'
 
@@ -116,6 +128,10 @@ Template.list.servers = ->
       $options: 'i'
     'status.online': Router.current().params.tag != 'offline'
 
+  if Router.current().params.tag == 'v10+'
+    query['status.serverinfo.client'] =
+      $regex: '^1([0-9])\.'
+      $options: 'i'
   query['status.spigu_hosting'] = true if Router.current().params.tag == 'spigu'
   query['status.ddos_protected'] = true if Router.current().params.tag == 'ddos'
 
