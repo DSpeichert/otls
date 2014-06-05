@@ -42,11 +42,13 @@ Template.listMenu.drawClientChart = ->
   clientData = _.chain Servers.find({
     'status.online': true
   }).fetch()
+  .filter (el) ->
+      parseInt(el.status.serverinfo.client) > 3
   .countBy (el) ->
       try
-        return el.status.serverinfo.client
+        parseInt el.status.serverinfo.client
       catch e
-        return 'unknown'
+        'unknown'
   .map (value, key) ->
       version: key
       count: value
@@ -58,9 +60,9 @@ Template.listMenu.drawClientChart = ->
   nv.addGraph ->
     chart = nv.models.pieChart()
     .x (d) ->
-        return d.version
+        d.version + '.XX'
     .y (d) ->
-        return d.count
+        d.count
     .showLabels(true)
     .showLegend(false)
 
@@ -166,3 +168,6 @@ Template.list.events
           type: 'success'
           delay: 2000
           animation: 'fade'
+
+Template.list.rendered = ->
+  $('[data-toggle="tooltip"').tooltip()

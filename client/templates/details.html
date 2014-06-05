@@ -92,9 +92,9 @@
                         <div class="panel-body text-center">
                             {{status.serverinfo.server}} {{status.serverinfo.version}}<br/>
                             currently runnning for {{moment_duration status.serverinfo.uptime}}<br/>
-                            around for {{moment_fromNow createdAt true}}<br/>
-                            <div style="height: 100px; width: 100px; margin: auto;"><span id="ping-gauge" class="gauge-container"></span></div>
-                            hosted by {{status.ip_whois.isp}} in {{#if status.ip_whois.city}}{{status.ip_whois.city}}, {{/if}}<a class="flag-webicon {{toFlag status.ip_whois.country}} xsmall">{{status.ip_whois.country}}</a> {{status.ip_whois.country}}<br/>
+                            around for {{moment_fromNow createdAt true}} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="This is how long this server has been on our list."></span><br/>
+                            <div data-toggle="tooltip" title="Ping from our server in USA. If you are in Europe, higher is better. In America, lower is better." style="height: 100px; width: 100px; margin: auto;"><span id="ping-gauge" class="gauge-container"></span></div>
+                            hosted by {{status.ip_whois.isp}} in {{#if status.ip_whois.city}}{{status.ip_whois.city}}, {{/if}}<a class="flag-webicon {{toFlag status.ip_whois.country}} xsmall" title="{{status.ip_whois.country}}">{{status.ip_whois.country}}</a> {{status.ip_whois.country}}<br/>
                             with uptime of {{numeral status.uptime '0.00'}}%
                         </div>
                     </div>

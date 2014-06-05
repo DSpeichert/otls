@@ -34,6 +34,8 @@ Template.details.rendered = ->
   editor1 = new Markdown.Editor converter1
   editor1.run()
 
+  $('[data-toggle="tooltip"').tooltip()
+
   $('#fb-link').attr 'href', 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(Meteor.absoluteUrl Router.current().path)
   $('#fb-link').popupWindow
     height: 600

@@ -1,6 +1,6 @@
 <template name="listMenu">
     <ul class="nav nav-sidebar">
-        <li class={{isCurrentTag 'all'}}><a href="{{pathFor 'list'}}">All servers <span class="badge">{{servers_count}}</span></a></li>
+        <li class={{isCurrentTag 'all'}}><a href="{{pathFor 'list'}}">All online servers <span class="badge">{{servers_count}}</span></a></li>
         <li class={{isCurrentTag 'v10+'}}><a href="{{absoluteUrl 'tags/v10+'}}">Protocol 10+ <span class="badge">{{servers_v10p_count}}</span></a></li>
     </ul>
     <ul class="nav nav-sidebar">
@@ -11,7 +11,7 @@
         <li class={{isCurrentTag 'offline'}}><a href="{{absoluteUrl 'tags/offline'}}">Offline servers  <span class="badge">{{servers_offline_count}}</span></a></li>
     </ul>
 
-    <div>
+    <div data-toggle="tooltip" title="This is a breakdown of online servers by client version. We discard servers with invalid version or below 4.">
         <svg id="client-chart"></svg>
     </div>
     <button type="button" id="refresh-client-chart" class="btn btn-sm btn-block btn-default" style="display: none;">
@@ -37,10 +37,11 @@
                     <thead>
                     <tr>
                         <th></th>
-                        <th>Name</th>
-                        <th>Host/Website</th>
+                        <th><span data-toggle="tooltip" title="Click to view more information about the server.">Name</span></th>
+                        <th><span data-toggle="tooltip" title="Click to go to the website.">Host/Website</span></th>
                         <th>Players (Record) / Max</th>
                         <th>Uptime</th>
+                        <th><span data-toggle="tooltip" title="This is where the server is physically located.">Loc.</span></th>
                         <th>Rates</th>
                         <th>Client version</th>
                         <th><img class="pull-right" src="{{absoluteUrl 'img/loader.gif'}}" alt="Refreshing..." width="16" height="16" /></th>
@@ -54,6 +55,7 @@
                         <td><a href="{{status.serverinfo.url}}" target="_blank">{{host}}</a></td>
                         <td>{{status.players.online}} ({{status.players.peak}}) / {{status.players.max}}</td>
                         <td>{{numeral status.uptime '0.00'}}% {{#unless status.online}}<span class="label label-danger">OFFLINE</span>{{/unless}}</td>
+                        <td><a class="flag-webicon {{toFlag status.ip_whois.country}} small" title="This server is located in {{status.ip_whois.country}}. If you are close, you won't have lags.">{{status.ip_whois.country}}</a></td>
                         <td>{{#if status.rates}}Exp: {{status.rates.experience}}x<br/>Mag: {{status.rates.magic}}x{{/if}}</td>
                         <td>{{shorten status.serverinfo.client 6}}</td>
                         <td>
