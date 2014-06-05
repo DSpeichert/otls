@@ -18,22 +18,7 @@ Template.details.events
           text: 'Refresh successful.'
           type: 'success'
 
-  'click #edit-description': (event) ->
-    event.preventDefault()
-    $('#description-editor').toggle()
-
-  'change #wmd-input': (event) ->
-    Servers.update
-      _id: Session.get 'server'
-    ,
-      $set:
-        description: event.currentTarget.value
-
 Template.details.rendered = ->
-  converter1 = Markdown.getSanitizingConverter()
-  editor1 = new Markdown.Editor converter1
-  editor1.run()
-
   $('[data-toggle="tooltip"').tooltip()
 
   $('#fb-link').attr 'href', 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(Meteor.absoluteUrl Router.current().path)
@@ -72,7 +57,7 @@ Template.details.rendered = ->
 
   nv.addGraph ->
     chart = nv.models.stackedAreaChart()
-      .margin({right: 100})
+      .margin({right: 60})
       .x (d) ->
         try
           return d.timestamp #We can modify the data accessor functions...
@@ -85,7 +70,7 @@ Template.details.rendered = ->
           0
       .useInteractiveGuideline(true)    #Tooltips which show all data points. Very nice!
       .rightAlignYAxis(false)      #Let's move the y-axis to the right side.
-      .transitionDuration(500)
+      .transitionDuration(1000)
       .showControls(false)   #Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
       .clipEdge(true)
       .showLegend(false)
@@ -105,3 +90,21 @@ Template.details.rendered = ->
 
     nv.utils.windowResize chart.update
     chart
+
+
+Template.detailsDescription.rendered = ->
+  converter1 = Markdown.getSanitizingConverter()
+  editor1 = new Markdown.Editor converter1
+  editor1.run()
+
+Template.detailsDescription.events
+  'click #edit-description': (event) ->
+    event.preventDefault()
+    $('#description-editor').toggle()
+
+  'change #wmd-input': (event) ->
+    Servers.update
+      _id: Session.get 'server'
+    ,
+      $set:
+        description: event.currentTarget.value

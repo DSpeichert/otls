@@ -110,6 +110,7 @@ Template.listMenu.rendered = ->
     })
 
 Template.list.playersOnlineServers = Template.listMenu.servers_count
+Template.list.meteor_status = Meteor.status
 
 Template.list.playersOnline = ->
   _.reduce Servers.find({

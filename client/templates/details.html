@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">Overview</a></li>
-                <li><a href="#">Reports</a></li>
+                <li class="active"><a href="{{pathFor 'details'}}">Overview</a></li>
+                {{#if description}}<li><a href="{{pathFor 'details/description'}}">Description</a></li>{{/if}}
                 <li><a href="#">Analytics</a></li>
                 <li><a href="#">Export</a></li>
             </ul>
@@ -46,9 +46,11 @@
                 </div>
                 <div class="col-md-3">
                     <div class="well">
-                        <button type="button" id="edit-description" class="btn btn-default">
-                            <span class="glyphicon glyphicon-pencil"></span> Description
-                        </button>
+                        {{#unless description}}
+                        <a href="{{pathFor 'details/description'}}" id="create-description" class="btn btn-default">
+                            <span class="glyphicon glyphicon-pencil"></span> Create Description
+                        </a>
+                        {{/unless}}
                         <button type="button" data-action="refresh" data-id="{{_id}}" class="btn btn-success">
                             <span class="glyphicon glyphicon-refresh"></span> Refresh
                         </button>
@@ -148,12 +150,53 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</template>
 
-            <div id="description-editor" class="wmd-panel" style="display: none;">
-                <div id="wmd-button-bar"></div>
-                <textarea class="wmd-input" id="wmd-input">{{description}}</textarea>
+<template name="detailsDescription">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="{{pathFor 'details'}}">Overview</a></li>
+                <li class="active"><a href="{{pathFor 'details/description'}}">Description</a></li>
+                <li><a href="#">Analytics</a></li>
+                <li><a href="#">Export</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="">Nav item</a></li>
+                <li><a href="">Nav item again</a></li>
+                <li><a href="">One more nav</a></li>
+                <li><a href="">Another nav item</a></li>
+                <li><a href="">More navigation</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="">Nav item again</a></li>
+                <li><a href="">One more nav</a></li>
+                <li><a href="">Another nav item</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="row">
+                <div class="col-md-9">
+                    <div id="description-editor" class="wmd-panel" style="display: none;">
+                        <div id="wmd-button-bar"></div>
+                        <textarea class="wmd-input" id="wmd-input">{{description}}</textarea>
+                    </div>
+                    {{#if description}}
+                    <p class="lead">{{pagedown description}}</p>
+                    {{else}}
+                    There is no description available for this server yet.
+                    {{/if}}
+                </div>
+                <div class="col-md-3">
+                    <div class="well">
+                        <button type="button" id="edit-description" class="btn btn-default">
+                            <span class="glyphicon glyphicon-pencil"></span> Description
+                        </button>
+                    </div>
+                </div>
             </div>
-            <p class="lead">{{pagedown description}}</p>
         </div>
     </div>
 </template>
