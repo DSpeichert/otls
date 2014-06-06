@@ -1,5 +1,5 @@
 Meteor.startup ->
-  #Servers.getStatus 'shadowcores.twifysoft.net'
+  #console.log Servers.getStatusInfoSync 'shadowcores.twifysoft.net', 7171
   #Servers.getStatus 'underwar.org'
 
   Meteor.setInterval ->

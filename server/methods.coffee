@@ -3,9 +3,10 @@ Meteor.methods
     check id, String
     Servers.refresh id
 
-  importFromShit: ->
+  importFromShit: (n=1) ->
+    check n, Number
     console.log 'Importing...'
-    site = HTTP.get 'http://otservlist.org'
+    site = HTTP.get 'http://otservlist.org/list-server_players_online-desc-' + n + '.html'
     regexp = /\<a href="\/ots\/[0-9]+"\>([^<]+)\<\/a\>/gi
     while match = regexp.exec site.content
       if Servers.findOne {host: match[1], port: 7171}

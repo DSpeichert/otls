@@ -39,6 +39,46 @@ Servers.getStatus = (host, port=7171, callback) ->
 
 Servers.getStatusSync = Async.wrap Servers.getStatus
 
+Servers.getStatusInfoPlayers = (host, port=7171, callback) ->
+  time = null
+  client = net.connect
+    host: host
+    port: port, ->
+      console.log 'we connected to ' + client.remoteAddress + ':' + client.remotePort
+      time = new Date()
+      # this does not work: String.fromCharCode(6) + String.fromCharCode(0) + String.fromCharCode(255) + String.fromCharCode(255) + 'info'
+      # We need to use buffer here because nodejs converts null (0x00) to space (0x20) in ASCII
+      client.write new Buffer('0600ff012000', 'hex'), ->
+        #console.log 'data sent'
+
+  client.setTimeout 5000, ->
+    console.log 'remote timed out after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
+    client.end()
+    client.destroy()
+    callback? 'timeout', null
+
+  client.setEncoding 'ascii'
+
+  client.on 'data', (data) ->
+    #console.log 'got some response', data
+    ip = client.remoteAddress
+    client.end()
+    client.destroy()
+    console.log 'we disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
+    callback? null, [data, ip, new Date().getMilliseconds() - time.getMilliseconds()]
+
+  client.on 'end', ->
+    console.log 'remote disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
+    # even though we return false here, the caller gets "undefined"
+    # if we pass null as return value, exception is thrown
+    callback? null, false
+
+  client.on 'error', ->
+    console.log 'socket error'
+    callback? 'socket error', null
+
+Servers.getStatusInfoPlayersSync = Async.wrap Servers.getStatusInfoPlayers
+
 Servers.getParsedStatus = (host, port=7171) ->
   try
     [raw_status, remoteAddress, ping] = @getStatusSync host, port
