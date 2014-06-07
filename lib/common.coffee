@@ -5,4 +5,4 @@ Meteor.absoluteUrlWithHash = (path) ->
       item.url == '/' + path
     .hash;
 
-  return Meteor.absoluteUrl path + hash
+  Meteor.absoluteUrl path + hash
