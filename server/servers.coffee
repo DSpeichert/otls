@@ -11,7 +11,7 @@ Servers.getStatus = (host, port=7171, callback) ->
       client.write new Buffer('0600ffff696e666f', 'hex'), ->
         #console.log 'data sent'
 
-  client.setTimeout 5000, ->
+  client.setTimeout 3000, ->
     console.log 'remote timed out after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
     client.end()
     client.destroy()
@@ -46,32 +46,54 @@ Servers.getStatusInfoPlayers = (host, port=7171, callback) ->
     port: port, ->
       console.log 'we connected to ' + client.remoteAddress + ':' + client.remotePort
       time = new Date()
-      # this does not work: String.fromCharCode(6) + String.fromCharCode(0) + String.fromCharCode(255) + String.fromCharCode(255) + 'info'
-      # We need to use buffer here because nodejs converts null (0x00) to space (0x20) in ASCII
-      client.write new Buffer('0600ff012000', 'hex'), ->
-        #console.log 'data sent'
+      client.write new Buffer '0600ff0120000000', 'hex'
 
-  client.setTimeout 5000, ->
+  client.setTimeout 2000, ->
     console.log 'remote timed out after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
     client.end()
     client.destroy()
     callback? 'timeout', null
 
-  client.setEncoding 'ascii'
-
+  bufs = []
   client.on 'data', (data) ->
     #console.log 'got some response', data
-    ip = client.remoteAddress
-    client.end()
-    client.destroy()
-    console.log 'we disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
-    callback? null, [data, ip, new Date().getMilliseconds() - time.getMilliseconds()]
+    bufs.push(data)
 
   client.on 'end', ->
     console.log 'remote disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
-    # even though we return false here, the caller gets "undefined"
-    # if we pass null as return value, exception is thrown
-    callback? null, false
+    data = Buffer.concat bufs
+
+    if data.length == 0
+      console.log 'no data returned'
+      callback? null, false
+      return
+
+    if data[2] != 33
+      console.log 'malformed data: not a player list', data
+      callback? null, false
+      return
+
+    #players_online = (data[6] << 24) | (data[5] << 16) | (data[4] << 8) | data[3]
+    players_online = data.readUInt32LE 3
+    console.log 'players online: ' + players_online
+    pos = 7
+    i = 0
+    players = []
+    while i < players_online
+      #nameLen = (data[pos + 1] << 8) | data[pos]
+      nameLen = data.readUInt16LE pos
+      pos += 2
+      name = data.toString 'utf8', pos, pos + nameLen
+      pos += nameLen
+      #level = (data[pos + 3] << 24) | (data[pos + 2] << 16) | (data[pos + 1] << 8) | data[pos]
+      level = data.readUInt32LE pos
+      pos += 4
+      players.push
+        name: name
+        level: level
+      ++i
+
+    callback? null, [players, new Date().getMilliseconds() - time.getMilliseconds()]
 
   client.on 'error', ->
     console.log 'socket error'
@@ -197,3 +219,23 @@ Servers.refresh = (id) ->
         timestamp: server.statusAt
 
   status
+
+Servers.refreshPlayers = (id) ->
+  server = Servers.findOne
+    _id: id
+
+  throw new Meteor.Error 500, 'Server not found' if not server?
+
+  try
+    [players, ping] = @getStatusInfoPlayersSync server.host, server.port
+  catch e
+    return players
+
+  return players if players is null
+
+  Servers.update _id: id,
+    $set:
+      players: players
+      playersAt: new Date()
+
+  players

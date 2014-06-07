@@ -1,25 +1,27 @@
+<template name="detailsMenu">
+    <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+            <li class="active"><a href="{{pathFor 'details'}}">Overview</a></li>
+            {{#if description}}<li><a href="{{pathFor 'details/description'}}">Description</a></li>{{/if}}
+            {{#if players}}<li><a href="{{pathFor 'details/players'}}">Online Players</a></li>{{/if}}
+        </ul>
+        <ul class="nav nav-sidebar">
+            <li><a href="">Nav item</a></li>
+            <li><a href="">Nav item again</a></li>
+            <li><a href="">One more nav</a></li>
+            <li><a href="">Another nav item</a></li>
+            <li><a href="">More navigation</a></li>
+        </ul>
+        <ul class="nav nav-sidebar">
+            <li><a href="">Nav item again</a></li>
+            <li><a href="">One more nav</a></li>
+            <li><a href="">Another nav item</a></li>
+        </ul>
+    </div>
+</template>
 <template name="details">
     <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li class="active"><a href="{{pathFor 'details'}}">Overview</a></li>
-                {{#if description}}<li><a href="{{pathFor 'details/description'}}">Description</a></li>{{/if}}
-                <li><a href="#">Analytics</a></li>
-                <li><a href="#">Export</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="">Nav item</a></li>
-                <li><a href="">Nav item again</a></li>
-                <li><a href="">One more nav</a></li>
-                <li><a href="">Another nav item</a></li>
-                <li><a href="">More navigation</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="">Nav item again</a></li>
-                <li><a href="">One more nav</a></li>
-                <li><a href="">Another nav item</a></li>
-            </ul>
-        </div>
+        {{> detailsMenu}}
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
             <div class="row">
@@ -156,26 +158,7 @@
 
 <template name="detailsDescription">
     <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li><a href="{{pathFor 'details'}}">Overview</a></li>
-                <li class="active"><a href="{{pathFor 'details/description'}}">Description</a></li>
-                <li><a href="#">Analytics</a></li>
-                <li><a href="#">Export</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="">Nav item</a></li>
-                <li><a href="">Nav item again</a></li>
-                <li><a href="">One more nav</a></li>
-                <li><a href="">Another nav item</a></li>
-                <li><a href="">More navigation</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="">Nav item again</a></li>
-                <li><a href="">One more nav</a></li>
-                <li><a href="">Another nav item</a></li>
-            </ul>
-        </div>
+        {{> detailsMenu}}
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="row">
                 <div class="col-md-9">
@@ -195,6 +178,36 @@
                             <span class="glyphicon glyphicon-pencil"></span> Description
                         </button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="detailsPlayers">
+    <div class="row">
+        {{> detailsMenu}}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Level</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#each players}}
+                        <tr>
+                            <td>{{name}}</td>
+                            <td>{{level}}</td>
+                        </tr>
+                        {{else}}
+                        <p class="text-center">No players online.</p>
+                        {{/each}}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

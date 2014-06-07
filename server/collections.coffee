@@ -1,5 +1,11 @@
-Meteor.publish 'Servers', ->
-  Servers.find()
+Meteor.publish 'Servers', (scope) ->
+  check scope, Match.Optional [String]
+  if _.indexOf(scope, 'players') != -1
+    Servers.find()
+  else
+    Servers.find {},
+      fields:
+        players: 0
 
 Meteor.publish 'StatusHistory', (scope) ->
   check scope,

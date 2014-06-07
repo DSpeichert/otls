@@ -53,23 +53,37 @@ Router.map ->
         pause()
     waitOn: ->
       [
-        Meteor.subscribe 'Servers'
+        Meteor.subscribe 'Servers', ['players']
         Meteor.subscribe 'StatusHistory',
           serverId: @params._id
       ]
 
-    @route 'details/description',
-      path: '/ots/:_id/description'
-      template: 'detailsDescription'
-      data: ->
-        Servers.findOne
-          _id: @params._id
-      onBeforeAction: (pause)->
-        Session.set 'server', @params._id
-        if not @data()
-          @render '404'
-          pause()
-      waitOn: ->
-        Meteor.subscribe 'Servers'
+  @route 'details/description',
+    path: '/ots/:_id/description'
+    template: 'detailsDescription'
+    data: ->
+      Servers.findOne
+        _id: @params._id
+    onBeforeAction: (pause)->
+      Session.set 'server', @params._id
+      if not @data()
+        @render '404'
+        pause()
+    waitOn: ->
+      Meteor.subscribe 'Servers', ['players']
+
+  @route 'details/players',
+    path: '/ots/:_id/players'
+    template: 'detailsPlayers'
+    data: ->
+      Servers.findOne
+        _id: @params._id
+    onBeforeAction: (pause)->
+      Session.set 'server', @params._id
+      if not @data()
+        @render '404'
+        pause()
+    waitOn: ->
+      Meteor.subscribe 'Servers', ['players']
 
   @route 'faq'
