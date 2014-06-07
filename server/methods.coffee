@@ -5,7 +5,6 @@ Meteor.methods
 
   importFromShit: (n=1) ->
     check n, Number
-    console.log 'Importing...'
     site = HTTP.get 'http://otservlist.org/list-server_players_online-desc-' + n + '.html'
     regexp = /\<a href="\/ots\/[0-9]+"\>([^<]+)\<\/a\>/gi
     while match = regexp.exec site.content
@@ -14,7 +13,7 @@ Meteor.methods
         continue
 
       try
-        status = Servers.getParsedStatus(match[1])
+        status = Servers.getParsedStatusSync match[1]
         if status is false
           throw new Meteor.Error 420, 'Server did not return any data'
         status.uptime = 100

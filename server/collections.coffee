@@ -29,7 +29,7 @@ Servers.allow
     try
       doc.createdAt = new Date()
       doc.userId = userId
-      doc.status = Servers.getParsedStatus doc.host, doc.port
+      doc.status = Servers.getParsedStatusSync doc.host, doc.port
       doc.statusAt = new Date()
       doc.statusCount = 1
       doc.statusFail = 0

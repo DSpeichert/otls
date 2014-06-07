@@ -151,12 +151,12 @@ Servers.getStatusInfoPlayers = (host, port, callback) ->
   client = net.connect
     host: host
     port: port, ->
-      console.log 'we connected to ' + client.remoteAddress + ':' + client.remotePort
+      #console.log 'we connected to ' + client.remoteAddress + ':' + client.remotePort
       time = new Date()
       client.write new Buffer '0600ff0120000000', 'hex'
 
   client.setTimeout 2000, ->
-    console.log 'remote timed out after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
+    #console.log 'remote timed out after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
     client.end()
     client.destroy()
     callback? new Meteor.Error(504, 'Client timed out')
@@ -166,7 +166,7 @@ Servers.getStatusInfoPlayers = (host, port, callback) ->
     bufs.push(data)
 
   client.on 'end', ->
-    console.log 'remote disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
+    #console.log 'remote disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
     data = Buffer.concat bufs
 
     if data.length == 0
