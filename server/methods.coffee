@@ -13,7 +13,7 @@ Meteor.methods
         continue
 
       try
-        status = Servers.getParsedStatusSync match[1]
+        status = Servers.getParsedStatusSync match[1], 7171
         if status is false
           throw new Meteor.Error 420, 'Server did not return any data'
         status.uptime = 100
