@@ -16,7 +16,8 @@
       "chatworks": {},
       "GAnalytics": {},
       "nvd3js": {},
-      "iron-router-progress": {}
+      "iron-router-progress": {},
+      "reststop2": {}
     },
     "packages": {
       "iron-router": {
@@ -36,23 +37,23 @@
       },
       "roles": {
         "git": "https://github.com/alanning/meteor-roles.git",
-        "tag": "v1.2.9",
-        "commit": "969b17fac5dfec66b6b12bfce4e37471d1a241d4"
+        "tag": "v1.2.10",
+        "commit": "7ccb35de0a6cb0c9a0c3666badd04757e39c09a6"
       },
       "connection-banner": {
         "git": "https://github.com/nate-strauser/meteor-connection-banner.git",
-        "tag": "v0.2.2",
-        "commit": "f82217d8fca950ce55269c749b3da4c31e7240df"
+        "tag": "v0.4.0",
+        "commit": "2652cd4ee4d863651c4b5298aebcf2c5710d2971"
       },
       "user-status": {
         "git": "https://github.com/mizzao/meteor-user-status.git",
-        "tag": "v0.4.0",
-        "commit": "e2a1c7a4075f28b87b361387688e083a4b047a08"
+        "tag": "v0.5.0",
+        "commit": "6a096fd9f3a916887c92cb778040ce2f8a9cc554"
       },
       "bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
-        "tag": "v3.1.1-1",
-        "commit": "63dd38968828bb8963636df93e9a1c45e2dfe67e"
+        "tag": "v3.2.0-1",
+        "commit": "17a63902fc6cf1096c5289d963c66cf28b474727"
       },
       "xml2js": {
         "git": "https://github.com/peerlibrary/meteor-xml2js.git",
@@ -91,8 +92,13 @@
       },
       "iron-router-progress": {
         "git": "https://github.com/Multiply/iron-router-progress.git",
-        "tag": "v0.4.0",
-        "commit": "02f78bdaca4c13d59f548d5a0ce83408c34b56d1"
+        "tag": "v0.4.1",
+        "commit": "496fcda9a6ec352b4733725f60c6f280250c3541"
+      },
+      "reststop2": {
+        "git": "https://github.com/Differential/reststop2.git",
+        "tag": "v0.5.9",
+        "commit": "f006994d2505a0c68ea46c84ab0e3a9040641a9d"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
@@ -101,8 +107,8 @@
       },
       "timesync": {
         "git": "https://github.com/mizzao/meteor-timesync.git",
-        "tag": "v0.1.6",
-        "commit": "83067433f511bc13a11ae8c87e9a4d331256915e"
+        "tag": "v0.2.0",
+        "commit": "55f1daf261996dfbd726253688cfe7a2cc169d9b"
       },
       "blocking": {
         "git": "https://github.com/peerlibrary/meteor-blocking.git",
