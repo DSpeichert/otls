@@ -7,7 +7,7 @@ Meteor.startup ->
 
   Meteor.setInterval refreshAll, 600000
   Meteor.setTimeout ->
-    Meteor.setInterval refreshPlayersAll, 600000
+    Meteor.setInterval(refreshPlayersAll, 600000)
   , 300000
 
   #refreshPlayersAll()
@@ -55,7 +55,7 @@ refreshAll = ->
           timestamp: server.statusAt
 
 refreshPlayersAll = ->
-  Servers.find({deleted: {$ne: true}}).forEach (server) ->
+  Servers.find({deleted: {$ne: true}, online: true}).forEach (server) ->
     Servers.getStatusInfoPlayers server.host, server.port, Meteor.bindEnvironment (error, result) ->
       if error
         return console.log '[cron] error checking players list on server', server._id, error.message

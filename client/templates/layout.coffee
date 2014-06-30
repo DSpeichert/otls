@@ -11,3 +11,7 @@ Template.layout.events
   'submit #search-form': (event) ->
     event.preventDefault()
     Router.go 'list' if Router.current().route.name not in ['list', 'listTagged']
+
+Template.layout.rendered = ->
+  $('body').tooltip
+    selector: '[data-toggle="tooltip"]'

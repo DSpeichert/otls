@@ -170,5 +170,3 @@ Template.list.events
           delay: 2000
           animation: 'fade'
 
-Template.list.rendered = ->
-  $('[data-toggle="tooltip"').tooltip()
