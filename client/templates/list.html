@@ -1,4 +1,8 @@
 <template name="listMenu">
+    {{#if currentUser}}
+    <h5>Welcome {{currentUser.profile.name}}!</h5>
+    {{/if}}
+
     <ul class="nav nav-sidebar">
         <li class={{isCurrentTag 'all'}}><a href="{{pathFor 'list'}}">All online servers <span class="badge">{{servers_count}}</span></a></li>
         <li class={{isCurrentTag 'v10+'}}><a href="{{absoluteUrl 'tags/v10+'}}">Protocol 10+ <span class="badge">{{servers_v10p_count}}</span></a></li>

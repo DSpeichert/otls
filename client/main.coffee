@@ -87,3 +87,7 @@ Router.map ->
       Meteor.subscribe 'Servers', ['players']
 
   @route 'faq'
+
+Accounts.ui.config
+  requestPermissions:
+    otland: ['read']
