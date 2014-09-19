@@ -5,7 +5,7 @@ Meteor.startup ->
   #console.log Servers.getParsedStatusSync 'shadowcores.twifysoft.net', 7171
   #console.log Servers.getParseStatus 'underwar.org', 7171
 
-  Meteor.setInterval refreshAll, 5000
+  Meteor.setInterval refreshAll, 10000
   Meteor.setInterval removeDead, 3600000
   removeDead()
   #Meteor.setTimeout ->
@@ -24,7 +24,7 @@ Meteor.AppCache.config
   chrome: process.env.NODE_ENV != 'development'
   onlineOnly: [
     '/flags/'
-    '/packages/flag-webicons/'
+    '/packages/gadicohen_flag-webicons/'
   ]
 
 refreshAll = ->

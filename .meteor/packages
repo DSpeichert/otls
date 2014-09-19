@@ -2,16 +2,13 @@
 #
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
-
 standard-app-packages
 jquery
 accounts-ui
 audit-argument-checks
 browser-policy
 mrt:moment@2.8.1
-mizzao:user-status@0.6.0
 coffeescript
-flag-webicons
 http
 mrt:numeral@1.5.3
 spiderable
@@ -19,9 +16,7 @@ d3
 datariot:ganalytics@0.2.0
 underscore
 mrt:nvd3js@0.1.0
-mrt:iron-router-progress@0.4.1
 appcache
-hellogerard:reststop2@0.6.0
 otland
 accounts-otland
 iron:router
@@ -30,6 +25,9 @@ alanning:roles
 mizzao:bootstrap-3
 natestrauser:x-editable-bootstrap
 meteorhacks:npm
-
-
 npm-container
+gadicohen:flag-webicons
+mrt:iron-router-progress
+hellogerard:reststop2
+mizzao:user-status
+

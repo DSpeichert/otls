@@ -92,6 +92,7 @@ Template.listMenu.rendered = ->
   query['status.spigu_hosting'] = true if Router.current().params.tag == 'spigu'
   query['status.ddos_protected'] = true if Router.current().params.tag == 'ddos'
 
+###
   Servers
     .find query
     .observeChanges({
@@ -108,6 +109,7 @@ Template.listMenu.rendered = ->
           backgroundColor: prev_color
         , 850 #ms
     })
+###
 
 Template.list.playersOnlineServers = Template.listMenu.servers_count
 Template.list.meteor_status = Meteor.status

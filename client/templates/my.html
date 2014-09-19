@@ -19,7 +19,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{#each servers}}
+                    {{#each playedServers}}
                     <tr>
                         <td><a class="flag-webicon {{toFlag status.serverinfo.location}} xsmall">{{status.serverinfo.location}}</a></td>
                         <td><a href="{{pathFor 'details'}}">{{status.serverinfo.servername}}</a></td>
@@ -58,7 +58,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{#each servers}}
+                    {{#each ownedServers}}
                     <tr>
                         <td><a class="flag-webicon {{toFlag status.serverinfo.location}} xsmall">{{status.serverinfo.location}}</a></td>
                         <td><a href="{{pathFor 'details'}}">{{status.serverinfo.servername}}</a></td>
