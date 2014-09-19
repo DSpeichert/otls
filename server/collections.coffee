@@ -28,6 +28,7 @@ Servers.allow
 
     try
       doc.createdAt = new Date()
+      doc.lastCheck = new Date()
       doc.userId = userId
       doc.status = Servers.getParsedStatusSync doc.host, doc.port
       doc.statusAt = new Date()

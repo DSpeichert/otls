@@ -80,6 +80,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">Players</div>
                         <div class="panel-body text-center">
+                            <small>status from {{moment_fromNow statusAt}}</small><br/>
                             <strong>{{status.players.online}}</strong> players online<br/>
                             Record is <strong>{{status.players.peak}}</strong>
                             {{#unless status.online}}<h2><span class="label label-danger">Server is OFFLINE</span></h2>{{/unless}}

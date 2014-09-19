@@ -21,6 +21,7 @@ Meteor.methods
           host: match[1]
           port: 7171
           createdAt: new Date()
+          lastCheck: new Date()
           status: status
           statusAt: new Date()
           statusCount: 0
