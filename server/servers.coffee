@@ -1,3 +1,5 @@
+xml2js = Async.wrap Meteor.npmRequire('xml2js'), ['parseString']
+
 net = Npm.require 'net'
 Servers.getStatus = (host, port, callback) ->
   time = null
@@ -30,10 +32,46 @@ Servers.getStatus = (host, port, callback) ->
     #console.log 'remote disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
     # even though we return false here, the caller gets "undefined"
     # if we pass null as return value, exception is thrown
-    callback new Meteor.Error 420, 'Server throttled connection'
+    callback new Meteor.Error(420, 'Server throttled connection')
 
   client.on 'error', ->
-    callback new Meteor.Error(504, 'Client had socket error')
+    time = null
+    host = host
+    port = port
+    callback = callback
+    client = net.connect
+      host: host
+      port: port, ->
+        #console.log 'we connected to ' + client.remoteAddress + ':' + client.remotePort
+        time = new Date()
+        # this does not work: String.fromCharCode(6) + String.fromCharCode(0) + String.fromCharCode(255) + String.fromCharCode(255) + 'info'
+        # We need to use buffer here because nodejs converts null (0x00) to space (0x20) in ASCII
+        client.write new Buffer('0600ffff696e666f', 'hex')
+
+    client.setTimeout 3000, ->
+      #console.log 'remote timed out after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
+      client.end()
+      client.destroy()
+      callback new Meteor.Error(504, 'Client timed out')
+
+    client.setEncoding 'ascii'
+
+    client.on 'data', (data) ->
+      #console.log 'got some response', data
+      ip = client.remoteAddress
+      client.end()
+      client.destroy()
+      #console.log 'we disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
+      callback null, [data, ip, new Date().getMilliseconds() - time.getMilliseconds()]
+
+    client.on 'end', ->
+      #console.log 'remote disconnected after reading ' + client.bytesRead + ' bytes and writing ' + client.bytesWritten + ' bytes'
+      # even though we return false here, the caller gets "undefined"
+      # if we pass null as return value, exception is thrown
+      callback new Meteor.Error(420, 'Server throttled connection')
+
+    client.on 'error', ->
+      callback new Meteor.Error(504, 'Client had socket error')
 
 Servers.getParsedStatus = (host, port, callback) ->
   Servers.getStatus host, port, Meteor.bindEnvironment (error, result) ->
@@ -42,7 +80,7 @@ Servers.getParsedStatus = (host, port, callback) ->
       return
 
     [raw_status, remoteAddress, ping] = result
-    status = xml2js.parseStringSync raw_status
+    status = xml2js.parseString raw_status
 
     try
       ip_whois = HTTP.get('http://ip-api.com/json/' + remoteAddress).data
@@ -100,7 +138,8 @@ Servers.getParsedStatus = (host, port, callback) ->
       spigu_info = e.message
 
     normalized_status.spigu_hosting = /not authorized/.test spigu_info
-    normalized_status.ddos_protected = /^(Hosteam)/i.test(normalized_status.ip_whois.isp) or normalized_status.spigu_hosting
+    try
+      normalized_status.ddos_protected = /^(Hosteam)/i.test(normalized_status.ip_whois.isp) or normalized_status.spigu_hosting
 
     callback null, normalized_status
 

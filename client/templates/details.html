@@ -69,7 +69,7 @@
                         <div class="panel-heading">Connection details</div>
                         <div class="panel-body">
                             <table class="table condensed">
-                                <tr><td>IP</td><td>{{host}}</td></tr>
+                                <tr><td>IP</td><td>{{host}} ({{status.ip}})</td></tr>
                                 <tr><td>Port</td><td>{{port}}</td></tr>
                                 <tr><td>Client</td><td>{{status.serverinfo.client}}</td></tr>
                             </table>
@@ -98,7 +98,7 @@
                             currently runnning for {{moment_duration status.serverinfo.uptime}}<br/>
                             around for {{moment_fromNow createdAt true}} <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="This is how long this server has been on our list."></span><br/>
                             <div data-toggle="tooltip" title="Ping from our server in USA. If you are in Europe, higher is better. In America, lower is better." style="height: 100px; width: 100px; margin: auto;"><span id="ping-gauge" class="gauge-container"></span></div>
-                            hosted by {{status.ip_whois.isp}} in {{#if status.ip_whois.city}}{{status.ip_whois.city}}, {{/if}}<a class="flag-webicon {{toFlag status.ip_whois.country}} xsmall" title="{{status.ip_whois.country}}">{{status.ip_whois.country}}</a> {{status.ip_whois.country}}<br/>
+                            hosted {{#if status.ip_whois}}by {{status.ip_whois.isp}} in {{#if status.ip_whois.city}}{{status.ip_whois.city}}, {{/if}}<a class="flag-webicon {{toFlag status.ip_whois.country}} xsmall" title="{{status.ip_whois.country}}">{{status.ip_whois.country}}</a> {{status.ip_whois.country}}{{/if}}<br/>
                             with uptime of {{numeral status.uptime '0.00'}}%
                         </div>
                     </div>

@@ -1,9 +1,9 @@
 Meteor.publish 'Servers', (scope) ->
   check scope, Match.Optional [String]
   if _.indexOf(scope, 'players') != -1
-    Servers.find()
+    Servers.find {deleted: {$ne: true}}
   else
-    Servers.find {},
+    Servers.find {deleted: {$ne: true}},
       fields:
         players: 0
 
@@ -14,7 +14,7 @@ Meteor.publish 'StatusHistory', (scope) ->
   StatusHistory.find
     serverId: scope.serverId
     timestamp:
-      $gt: moment().subtract('days', 1).toDate()
+      $gt: moment().subtract(1, 'days').toDate()
   ,
     fields:
       serverId: 1
@@ -37,10 +37,27 @@ Servers.allow
     catch e
       throw new Meteor.Error 400, 'Cannot get server status.'
 
+    if Servers.findOne {'status.ip': doc.status.ip, port: doc.port}
+      throw new Meteor.Error 409, 'Server is already listed.'
+
     true
 
   update: ->
-    true
+    user = Meteor.users.findOne
+      userId: userId
 
-  remove: ->
-    true
+    try
+      if user.services.otland.user.username == doc.status.owner.name
+        return true
+
+    false
+
+  remove: (userId, doc) ->
+    user = Meteor.users.findOne
+      userId: userId
+
+    try
+      if user.services.otland.user.username == doc.status.owner.name
+        return true
+
+    false
