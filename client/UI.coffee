@@ -35,3 +35,5 @@ UI.registerHelper 'shorten', (str, chars) ->
     str.substring(0, chars) + '...'
   else
     str
+
+UI.registerHelper 'canManageServer', Meteor.canManageServer

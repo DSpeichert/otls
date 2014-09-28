@@ -43,7 +43,7 @@ Servers.allow
 
     true
 
-  update: ->
+  update: (userId, doc) ->
     user = Meteor.users.findOne
       userId: userId
 
